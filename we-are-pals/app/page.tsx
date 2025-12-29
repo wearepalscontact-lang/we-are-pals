@@ -289,30 +289,71 @@ export default function Home() {
       }}
     >
       <div style={{ maxWidth: 860, margin: "0 auto" }}>
-        <header
+ <header
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    gap: 16,
+    alignItems: "center",
+    marginBottom: 16,
+  }}
+>
+  <div>
+    <div
+      style={{
+        fontSize: 26,
+        fontWeight: 900,
+        letterSpacing: -0.6,
+        lineHeight: 1.1,
+      }}
+    >
+      we are pals
+    </div>
+
+    <div
+      style={{
+        marginTop: 4,
+        fontSize: 14,
+        fontWeight: 500,
+        opacity: 0.8,
+      }}
+    >
+      A good chat, anytime.
+    </div>
+
+    {(plan === "premium" || plan === "super") && (
+      <div style={{ marginTop: 6 }}>
+        <span
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 12,
-            alignItems: "center",
-            marginBottom: 12,
+            display: "inline-block",
+            padding: "4px 10px",
+            borderRadius: 999,
+            border: `1px solid ${themeObj.fg}22`,
+            background: `${themeObj.bubbleA}22`,
+            fontSize: 12,
+            fontWeight: 800,
           }}
         >
-          <div>
-            <div style={{ fontSize: 22, fontWeight: 800 }}>
-              we are pals {plan === "super" ? "✨" : ""}
-            </div>
-            <div style={{ opacity: 0.85, fontSize: 13 }}>
-              {plan === "super" ? "You’re chatting as a Super Pal ✨" : plan === "premium" ? "Premium Pal" : "Free"}
-            </div>
-          </div>
+          {plan === "super" ? "Super Pal ✨" : "Premium"}
+        </span>
+      </div>
+    )}
+  </div>
 
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <button onClick={() => setGame("chat")}>Chat</button>
-            <button onClick={() => setGame("trivia")}>Trivia</button>
-            <button onClick={() => setGame("memory_game")}>Memory Game</button>
-          </div>
-        </header>
+  <div
+    style={{
+      display: "flex",
+      gap: 8,
+      flexWrap: "wrap",
+      justifyContent: "flex-end",
+    }}
+  >
+    <button onClick={() => setGame("chat")}>Chat</button>
+    <button onClick={() => setGame("trivia")}>Trivia</button>
+    <button onClick={() => setGame("memory_game")}>Memory Game</button>
+  </div>
+</header>
+
 
         {/* Settings panel (simple for now; later becomes proper Settings screen) */}
         <section
@@ -549,3 +590,4 @@ export default function Home() {
 }
 
     
+
