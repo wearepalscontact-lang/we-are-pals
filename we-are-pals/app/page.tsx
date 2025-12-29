@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 
 type Role = "user" | "assistant";
 type Plan = "free" | "premium" | "super";
@@ -298,46 +299,61 @@ export default function Home() {
     marginBottom: 16,
   }}
 >
-  <div>
-    <div
+  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <Image
+      src="/pal-mascot.png"
+      alt="Pal mascot"
+      width={54}
+      height={54}
+      priority
       style={{
-        fontSize: 26,
-        fontWeight: 900,
-        letterSpacing: -0.6,
-        lineHeight: 1.1,
+        borderRadius: 14,
+        // nice subtle lift without looking like a button
+        boxShadow: `0 8px 24px ${themeObj.fg}22`,
       }}
-    >
-      we are pals
-    </div>
+    />
 
-    <div
-      style={{
-        marginTop: 4,
-        fontSize: 14,
-        fontWeight: 500,
-        opacity: 0.8,
-      }}
-    >
-      A good chat, anytime.
-    </div>
-
-    {(plan === "premium" || plan === "super") && (
-      <div style={{ marginTop: 6 }}>
-        <span
-          style={{
-            display: "inline-block",
-            padding: "4px 10px",
-            borderRadius: 999,
-            border: `1px solid ${themeObj.fg}22`,
-            background: `${themeObj.bubbleA}22`,
-            fontSize: 12,
-            fontWeight: 800,
-          }}
-        >
-          {plan === "super" ? "Super Pal ✨" : "Premium"}
-        </span>
+    <div>
+      <div
+        style={{
+          fontSize: 26,
+          fontWeight: 900,
+          letterSpacing: -0.6,
+          lineHeight: 1.1,
+        }}
+      >
+        we are pals
       </div>
-    )}
+
+      <div
+        style={{
+          marginTop: 4,
+          fontSize: 14,
+          fontWeight: 500,
+          opacity: 0.8,
+        }}
+      >
+        A good chat, anytime.
+      </div>
+
+      {(plan === "premium" || plan === "super") && (
+        <div style={{ marginTop: 6 }}>
+          <span
+            style={{
+              display: "inline-block",
+              padding: "4px 10px",
+              borderRadius: 999,
+              border: `1px solid ${themeObj.fg}22`,
+              background: `${themeObj.bubbleA}22`,
+              fontSize: 12,
+              fontWeight: 800,
+            }}
+          >
+            {plan === "super" ? "Super Pal ✨" : "Premium"}
+          </span>
+        </div>
+      )}
+    </div>
   </div>
 
   <div
@@ -353,6 +369,7 @@ export default function Home() {
     <button onClick={() => setGame("memory_game")}>Memory Game</button>
   </div>
 </header>
+
 
 
         {/* Settings panel (simple for now; later becomes proper Settings screen) */}
@@ -590,4 +607,5 @@ export default function Home() {
 }
 
     
+
 
