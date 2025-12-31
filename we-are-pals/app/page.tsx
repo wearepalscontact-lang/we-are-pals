@@ -299,62 +299,65 @@ export default function Home() {
     marginBottom: 16,
   }}
 >
-  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+  {/* Mascot */}
+  <Image
+    src="/pal-mascot.png"
+    alt="Pal mascot"
+    width={72}
+    height={72}
+    priority
+    style={{
+      borderRadius: 18,
+      background: "white",
+      padding: 6,
+      boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+    }}
+  />
+
+  {/* Logo + tagline */}
+  <div>
     <Image
-      src="/pal-mascot.png"
-      alt="Pal mascot"
-      width={54}
-      height={54}
+      src="/wearepals-logo.png"
+      alt="we are pals logo"
+      width={220}
+      height={80}
       priority
       style={{
-        borderRadius: 14,
-        // nice subtle lift without looking like a button
-        boxShadow: `0 8px 24px ${themeObj.fg}22`,
+        display: "block",
       }}
     />
 
-    <div>
-      <div
-        style={{
-          fontSize: 26,
-          fontWeight: 900,
-          letterSpacing: -0.6,
-          lineHeight: 1.1,
-        }}
-      >
-        we are pals
-      </div>
-
-      <div
-        style={{
-          marginTop: 4,
-          fontSize: 14,
-          fontWeight: 500,
-          opacity: 0.8,
-        }}
-      >
-        A good chat, anytime.
-      </div>
-
-      {(plan === "premium" || plan === "super") && (
-        <div style={{ marginTop: 6 }}>
-          <span
-            style={{
-              display: "inline-block",
-              padding: "4px 10px",
-              borderRadius: 999,
-              border: `1px solid ${themeObj.fg}22`,
-              background: `${themeObj.bubbleA}22`,
-              fontSize: 12,
-              fontWeight: 800,
-            }}
-          >
-            {plan === "super" ? "Super Pal ✨" : "Premium"}
-          </span>
-        </div>
-      )}
+    <div
+      style={{
+        marginTop: 4,
+        fontSize: 15,
+        fontWeight: 500,
+        opacity: 0.75,
+      }}
+    >
+      A good chat, anytime.
     </div>
+
+    {(plan === "premium" || plan === "super") && (
+      <div style={{ marginTop: 8 }}>
+        <span
+          style={{
+            display: "inline-block",
+            padding: "6px 12px",
+            borderRadius: 999,
+            border: `1px solid ${themeObj.fg}22`,
+            background: `${themeObj.bubbleA}22`,
+            fontSize: 12,
+            fontWeight: 700,
+          }}
+        >
+          {plan === "super" ? "Super Pal ✨" : "Premium"}
+        </span>
+      </div>
+    )}
   </div>
+</div>
 
   <div
     style={{
@@ -607,5 +610,6 @@ export default function Home() {
 }
 
     
+
 
 
