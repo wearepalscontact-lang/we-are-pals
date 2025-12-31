@@ -13,6 +13,7 @@ export default function Page() {
         margin: "0 auto",
         padding: 24,
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
+        background: "#faf7f2",
       }}
     >
       {/* Mascot animation */}
@@ -21,6 +22,9 @@ export default function Page() {
           0% { transform: translateY(0px); }
           50% { transform: translateY(-3px); }
           100% { transform: translateY(0px); }
+        // Respect reduced motion
+        @media (prefers-reduced-motion: reduce) {
+          * { animation: none !important; }
         }
       `}</style>
 
@@ -31,13 +35,20 @@ export default function Page() {
           justifyContent: "space-between",
           alignItems: "center",
           gap: 20,
-          paddingBottom: 16,
-          marginBottom: 24,
+          paddingBottom: 20,
+          marginBottom: 28,
           borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
-        {/* Left: mascot + logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        {/* Left: mascot + logo lockup */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 18,
+          }}
+        >
+          {/* Mascot */}
           <Image
             src="/pal-mascot.png"
             alt="Pal mascot"
@@ -53,18 +64,29 @@ export default function Page() {
             }}
           />
 
-          <div>
+          {/* Logo + tagline */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            {/* LOGO — natural aspect ratio, NOT squished */}
             <Image
               src="/wearepals-logo.png"
               alt="we are pals logo"
-              width={220}
-              height={80}
               priority
+              style={{
+                height: 48,
+                width: "auto",
+                display: "block",
+              }}
             />
 
             <div
               style={{
-                marginTop: 4,
+                marginTop: 6,
                 fontSize: 15,
                 opacity: 0.75,
               }}
@@ -83,7 +105,7 @@ export default function Page() {
                     fontWeight: 700,
                     background:
                       plan === "super"
-                        ? "rgba(255,200,80,0.2)"
+                        ? "rgba(255,200,80,0.25)"
                         : "rgba(0,0,0,0.06)",
                   }}
                 >
@@ -98,11 +120,11 @@ export default function Page() {
         <div style={{ display: "flex", gap: 8 }}>
           <button>Chat</button>
           <button>Trivia</button>
-          <button>Memory</button>
+          <button>Memory Game</button>
         </div>
       </header>
 
-      {/* TEMP CONTENT (your chat UI continues below) */}
+      {/* SETTINGS / CONTENT AREA (placeholder for your existing UI) */}
       <section
         style={{
           padding: 24,
@@ -111,24 +133,11 @@ export default function Page() {
         }}
       >
         <p style={{ opacity: 0.7 }}>
-          (Your existing chat UI continues here — unchanged)
+          (Your existing chat, persona, theme, ads, and input UI continues here —
+          unchanged.)
         </p>
 
-        {/* TEMP plan switch for testing */}
+        {/* TEMP plan switch (remove later) */}
         <div style={{ marginTop: 16 }}>
-          <label>
-            Plan (testing):{" "}
-            <select
-              value={plan}
-              onChange={(e) => setPlan(e.target.value as any)}
-            >
-              <option value="free">Free</option>
-              <option value="premium">Premium</option>
-              <option value="super">Super Pal</option>
-            </select>
-          </label>
-        </div>
-      </section>
-    </main>
-  );
-}
+          <
+
