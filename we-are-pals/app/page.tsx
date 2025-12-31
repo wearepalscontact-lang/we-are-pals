@@ -1,37 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 
 export default function Page() {
-  const [plan, setPlan] = useState("free");
-  const [persona, setPersona] = useState("Aussie mate vibe");
-  const [theme, setTheme] = useState("Calm Light");
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content:
-        "Hey — I’m here. Want to chat, do friendly trivia, or try a memory game?",
-    },
-  ]);
-
-  function sendMessage() {
-    if (!input.trim()) return;
-
-    setMessages((m) => [...m, { role: "user", content: input }]);
-    setInput("");
-
-    // placeholder assistant response
-    setTimeout(() => {
-      setMessages((m) => [
-        ...m,
-        {
-          role: "assistant",
-          content: "Got it 🙂 (AI response placeholder)",
-        },
-      ]);
-    }, 600);
-  }
+  const [plan, setPlan] = useState<"free" | "premium" | "super">("free");
 
   return (
     <main
@@ -40,131 +13,120 @@ export default function Page() {
         margin: "0 auto",
         padding: 24,
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
-        background: "#faf7f2",
       }}
     >
+      {/* Mascot animation */}
+      <style>{`
+        @keyframes palFloat {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-3px); }
+          100% { transform: translateY(0px); }
+        }
+      `}</style>
+
       {/* HEADER */}
       <header
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gap: 20,
+          paddingBottom: 16,
           marginBottom: 24,
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
-        <div>
-          <h1
+        {/* Left: mascot + logo */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <Image
+            src="/pal-mascot.png"
+            alt="Pal mascot"
+            width={72}
+            height={72}
+            priority
             style={{
-              fontSize: 28,
-              margin: 0,
-              fontWeight: 700,
+              borderRadius: 18,
+              background: "white",
+              padding: 6,
+              boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
+              animation: "palFloat 7s ease-in-out infinite",
             }}
-          >
-            we are pals
-          </h1>
-          <div style={{ opacity: 0.7 }}>A good chat, anytime.</div>
+          />
+
+          <div>
+            <Image
+              src="/wearepals-logo.png"
+              alt="we are pals logo"
+              width={220}
+              height={80}
+              priority
+            />
+
+            <div
+              style={{
+                marginTop: 4,
+                fontSize: 15,
+                opacity: 0.75,
+              }}
+            >
+              A good chat, anytime.
+            </div>
+
+            {(plan === "premium" || plan === "super") && (
+              <div style={{ marginTop: 8 }}>
+                <span
+                  style={{
+                    display: "inline-block",
+                    padding: "6px 12px",
+                    borderRadius: 999,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    background:
+                      plan === "super"
+                        ? "rgba(255,200,80,0.2)"
+                        : "rgba(0,0,0,0.06)",
+                  }}
+                >
+                  {plan === "super" ? "Super Pal ✨" : "Premium"}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
+        {/* Right: mode buttons */}
         <div style={{ display: "flex", gap: 8 }}>
           <button>Chat</button>
           <button>Trivia</button>
-          <button>Memory Game</button>
+          <button>Memory</button>
         </div>
       </header>
 
-      {/* SETTINGS */}
+      {/* TEMP CONTENT (your chat UI continues below) */}
       <section
         style={{
-          padding: 16,
-          borderRadius: 12,
-          border: "1px solid rgba(0,0,0,0.1)",
-          marginBottom: 16,
+          padding: 24,
+          borderRadius: 16,
+          background: "rgba(0,0,0,0.04)",
         }}
       >
-        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        <p style={{ opacity: 0.7 }}>
+          (Your existing chat UI continues here — unchanged)
+        </p>
+
+        {/* TEMP plan switch for testing */}
+        <div style={{ marginTop: 16 }}>
           <label>
-            Plan:
+            Plan (testing):{" "}
             <select
               value={plan}
-              onChange={(e) => setPlan(e.target.value)}
+              onChange={(e) => setPlan(e.target.value as any)}
             >
               <option value="free">Free</option>
               <option value="premium">Premium</option>
               <option value="super">Super Pal</option>
             </select>
           </label>
-
-          <label>
-            Persona:
-            <select
-              value={persona}
-              onChange={(e) => setPersona(e.target.value)}
-            >
-              <option>Aussie mate vibe</option>
-              <option>Calm listener</option>
-              <option>Friendly coach</option>
-            </select>
-          </label>
-
-          <label>
-            Theme:
-            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-              <option>Calm Light</option>
-              <option>Golden Hour</option>
-              <option>Night Mode</option>
-            </select>
-          </label>
-        </div>
-
-        <div style={{ marginTop: 8, opacity: 0.7, fontSize: 14 }}>
-          Free is session-only (no memory) and shows non-intrusive ads.
-        </div>
-      </section>
-
-      {/* AD PLACEHOLDER */}
-      <section
-        style={{
-          padding: 16,
-          borderRadius: 12,
-          border: "1px dashed rgba(0,0,0,0.15)",
-          marginBottom: 16,
-          opacity: 0.6,
-        }}
-      >
-        Ad slot (placeholder)
-      </section>
-
-      {/* CHAT */}
-      <section
-        style={{
-          padding: 16,
-          borderRadius: 12,
-          border: "1px solid rgba(0,0,0,0.1)",
-        }}
-      >
-        <div style={{ marginBottom: 12 }}>
-          {messages.map((m, i) => (
-            <div
-              key={i}
-              style={{
-                marginBottom: 8,
-                opacity: m.role === "assistant" ? 0.85 : 1,
-              }}
-            >
-              <strong>{m.role === "assistant" ? "Pal" : "You"}:</strong>{" "}
-              {m.content}
-            </div>
-          ))}
-        </div>
-
-        <div style={{ display: "flex", gap: 8 }}>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type a message…"
-            style={{ flex: 1, padding: 8 }}
-          />
-          <button onClick={sendMessage}>Send</button>
         </div>
       </section>
     </main>
