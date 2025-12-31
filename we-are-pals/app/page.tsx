@@ -367,38 +367,18 @@ export default function Page() {
                 animation: isSuper ? "palFloat 6s ease-in-out infinite" : "none",
               }}
             >
-              <img
-                src="/pal-mascot.png"
-                alt="Pal mascot"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: 14,
-                  display: "block",
-                }}
-              />
-            </div>
+    {/* Brand lockup: mascot + logo combined */}
+<img
+  src="/wearepals-banner.png"
+  alt="We are pals"
+  style={{
+    height: 72,        // adjust to 64 / 72 / 80 if you want
+    width: "auto",
+    display: "block",
+    objectFit: "contain",
+  }}
+/>
 
-            {/* Brand banner + tagline + tier */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <div className="banner" style={{ minHeight: 62 }}>
-                {/* Prefer banner, fall back to logo */}
-                <img
-                  src={brandBannerSrc}
-                  onError={(e) => {
-                    // fall back to logo if banner not present
-                    (e.currentTarget as HTMLImageElement).src = fallbackLogoSrc;
-                  }}
-                  alt="we are pals"
-                  style={{
-                    height: 40,
-                    width: "auto",
-                    display: "block",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
 
               <div className="muted" style={{ fontSize: 15 }}>
                 A good chat, anytime.
@@ -661,3 +641,4 @@ export default function Page() {
     </main>
   );
 }
+
