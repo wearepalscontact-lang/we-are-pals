@@ -1,10 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function Page() {
-  const [plan, setPlan] = useState<"free" | "premium" | "super">("free");
+  const [plan, setPlan] = useState("free");
+  const [persona, setPersona] = useState("Aussie mate vibe");
+  const [theme, setTheme] = useState("Calm Light");
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content:
+        "Hey — I’m here. Want to chat, do friendly trivia, or try a memory game?",
+    },
+  ]);
+
+  function sendMessage() {
+    if (!input.trim()) return;
+
+    setMessages((m) => [...m, { role: "user", content: input }]);
+    setInput("");
+
+    // placeholder assistant response
+    setTimeout(() => {
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          content: "Got it 🙂 (AI response placeholder)",
+        },
+      ]);
+    }, 600);
+  }
 
   return (
     <main
@@ -16,107 +43,28 @@ export default function Page() {
         background: "#faf7f2",
       }}
     >
-      {/* Mascot animation */}
-      <style>{`
-        @keyframes palFloat {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-3px); }
-          100% { transform: translateY(0px); }
-        // Respect reduced motion
-        @media (prefers-reduced-motion: reduce) {
-          * { animation: none !important; }
-        }
-      `}</style>
-
       {/* HEADER */}
       <header
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          gap: 20,
-          paddingBottom: 20,
-          marginBottom: 28,
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
+          marginBottom: 24,
         }}
       >
-        {/* Left: mascot + logo lockup */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 18,
-          }}
-        >
-          {/* Mascot */}
-          <Image
-            src="/pal-mascot.png"
-            alt="Pal mascot"
-            width={72}
-            height={72}
-            priority
+        <div>
+          <h1
             style={{
-              borderRadius: 18,
-              background: "white",
-              padding: 6,
-              boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
-              animation: "palFloat 7s ease-in-out infinite",
-            }}
-          />
-
-          {/* Logo + tagline */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
+              fontSize: 28,
+              margin: 0,
+              fontWeight: 700,
             }}
           >
-            {/* LOGO — natural aspect ratio, NOT squished */}
-            <Image
-              src="/wearepals-logo.png"
-              alt="we are pals logo"
-              priority
-              style={{
-                height: 48,
-                width: "auto",
-                display: "block",
-              }}
-            />
-
-            <div
-              style={{
-                marginTop: 6,
-                fontSize: 15,
-                opacity: 0.75,
-              }}
-            >
-              A good chat, anytime.
-            </div>
-
-            {(plan === "premium" || plan === "super") && (
-              <div style={{ marginTop: 8 }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "6px 12px",
-                    borderRadius: 999,
-                    fontSize: 12,
-                    fontWeight: 700,
-                    background:
-                      plan === "super"
-                        ? "rgba(255,200,80,0.25)"
-                        : "rgba(0,0,0,0.06)",
-                  }}
-                >
-                  {plan === "super" ? "Super Pal ✨" : "Premium"}
-                </span>
-              </div>
-            )}
-          </div>
+            we are pals
+          </h1>
+          <div style={{ opacity: 0.7 }}>A good chat, anytime.</div>
         </div>
 
-        {/* Right: mode buttons */}
         <div style={{ display: "flex", gap: 8 }}>
           <button>Chat</button>
           <button>Trivia</button>
@@ -124,20 +72,101 @@ export default function Page() {
         </div>
       </header>
 
-      {/* SETTINGS / CONTENT AREA (placeholder for your existing UI) */}
+      {/* SETTINGS */}
       <section
         style={{
-          padding: 24,
-          borderRadius: 16,
-          background: "rgba(0,0,0,0.04)",
+          padding: 16,
+          borderRadius: 12,
+          border: "1px solid rgba(0,0,0,0.1)",
+          marginBottom: 16,
         }}
       >
-        <p style={{ opacity: 0.7 }}>
-          (Your existing chat, persona, theme, ads, and input UI continues here —
-          unchanged.)
-        </p>
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <label>
+            Plan:
+            <select
+              value={plan}
+              onChange={(e) => setPlan(e.target.value)}
+            >
+              <option value="free">Free</option>
+              <option value="premium">Premium</option>
+              <option value="super">Super Pal</option>
+            </select>
+          </label>
 
-        {/* TEMP plan switch (remove later) */}
-        <div style={{ marginTop: 16 }}>
-          <
+          <label>
+            Persona:
+            <select
+              value={persona}
+              onChange={(e) => setPersona(e.target.value)}
+            >
+              <option>Aussie mate vibe</option>
+              <option>Calm listener</option>
+              <option>Friendly coach</option>
+            </select>
+          </label>
 
+          <label>
+            Theme:
+            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+              <option>Calm Light</option>
+              <option>Golden Hour</option>
+              <option>Night Mode</option>
+            </select>
+          </label>
+        </div>
+
+        <div style={{ marginTop: 8, opacity: 0.7, fontSize: 14 }}>
+          Free is session-only (no memory) and shows non-intrusive ads.
+        </div>
+      </section>
+
+      {/* AD PLACEHOLDER */}
+      <section
+        style={{
+          padding: 16,
+          borderRadius: 12,
+          border: "1px dashed rgba(0,0,0,0.15)",
+          marginBottom: 16,
+          opacity: 0.6,
+        }}
+      >
+        Ad slot (placeholder)
+      </section>
+
+      {/* CHAT */}
+      <section
+        style={{
+          padding: 16,
+          borderRadius: 12,
+          border: "1px solid rgba(0,0,0,0.1)",
+        }}
+      >
+        <div style={{ marginBottom: 12 }}>
+          {messages.map((m, i) => (
+            <div
+              key={i}
+              style={{
+                marginBottom: 8,
+                opacity: m.role === "assistant" ? 0.85 : 1,
+              }}
+            >
+              <strong>{m.role === "assistant" ? "Pal" : "You"}:</strong>{" "}
+              {m.content}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", gap: 8 }}>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message…"
+            style={{ flex: 1, padding: 8 }}
+          />
+          <button onClick={sendMessage}>Send</button>
+        </div>
+      </section>
+    </main>
+  );
+}
